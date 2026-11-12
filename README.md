@@ -108,7 +108,7 @@ In the running Expo terminal, press `r` to reload the app and `j` to open the de
    ```
 3. Commit and push the updated `app.json`.
 4. Create an access token at [expo.dev/settings/access-tokens](https://expo.dev/settings/access-tokens).
-5. On GitHub, go to **repo Settings → Secrets and variables → Actions → New repository secret**. Name it `EXPO_TOKEN` and paste the token.
+5. On GitHub, go to **repo Settings → Secrets and variables → Actions → New repository secret**. Name it `EXPO_API_KEY_ARKADEEP` and paste the token.
 6. Push to `main`, or run the workflow by hand from the **Actions** tab ("Publish EAS Update" → **Run workflow**).
 
 ### Opening it on your phone

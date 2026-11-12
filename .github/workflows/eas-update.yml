@@ -4,7 +4,7 @@
 # One-time setup (see README "Use it without your laptop"):
 #   1. Run `npx eas-cli init` and `npx eas-cli update:configure` in mobile/ and commit app.json.
 #   2. Create a token at https://expo.dev/settings/access-tokens
-#   3. Add it to GitHub: repo Settings > Secrets and variables > Actions > New secret named EXPO_TOKEN.
+#   3. Add it to GitHub: repo Settings > Secrets and variables > Actions > New secret named EXPO_API_KEY_ARKADEEP.
 
 name: Publish EAS Update
 
@@ -30,12 +30,12 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Check for EXPO_TOKEN
+      - name: Check for Expo token secret
         env:
-          EXPO_TOKEN: ${{ secrets.EXPO_API_KEY_ARKADEEP}}
+          EXPO_TOKEN: ${{ secrets.EXPO_API_KEY_ARKADEEP }}
         run: |
           if [ -z "$EXPO_API_KEY_ARKADEEP" ]; then
-            echo "::error::Missing EXPO_TOKEN secret. Add it under repo Settings > Secrets and variables > Actions."
+            echo "::error::Missing EXPO_API_KEY_ARKADEEP secret. Add it under repo Settings > Secrets and variables > Actions."
             exit 1
           fi
 

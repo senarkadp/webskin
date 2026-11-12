@@ -32,7 +32,7 @@ jobs:
 
       - name: Check for Expo token secret
         env:
-          EXPO_TOKEN: ${{ secrets.EXPO_API_KEY_ARKADEEP }}
+          EXPO_API_KEY_ARKADEEP: ${{ secrets.EXPO_API_KEY_ARKADEEP }}
         run: |
           if [ -z "$EXPO_API_KEY_ARKADEEP" ]; then
             echo "::error::Missing EXPO_API_KEY_ARKADEEP secret. Add it under repo Settings > Secrets and variables > Actions."

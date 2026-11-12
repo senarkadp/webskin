@@ -87,6 +87,53 @@ In the running Expo terminal, press `r` to reload the app and `j` to open the de
 
 ---
 
+## Use it without your laptop (EAS Update + GitHub Actions)
+
+`npx expo start` only works while your computer is running. To use WebSkin from anywhere, the app is published to Expo's servers as an **EAS Update**. A GitHub Actions workflow ([.github/workflows/eas-update.yml](.github/workflows/eas-update.yml)) runs the tests and publishes a new update every time you push to `main`.
+
+> **iOS note:** Expo's docs don't say whether Expo Go on iOS can open published updates. If it can't, the reliable iPhone path needs a paid Apple Developer account ($99/year) and an EAS build (see "Installing as a real iOS app" below). On Android, a free installable APK works.
+
+### One-time setup (on your computer)
+
+1. Create a free account at [expo.dev](https://expo.dev/signup).
+2. From the `mobile/` folder, log in and link the project. The second command writes `extra.eas.projectId` into `app.json`. The third writes `updates.url` and `runtimeVersion`.
+   ```bash
+   npx eas-cli login
+   ```
+   ```bash
+   npx eas-cli init
+   ```
+   ```bash
+   npx eas-cli update:configure
+   ```
+3. Commit and push the updated `app.json`.
+4. Create an access token at [expo.dev/settings/access-tokens](https://expo.dev/settings/access-tokens).
+5. On GitHub, go to **repo Settings → Secrets and variables → Actions → New repository secret**. Name it `EXPO_TOKEN` and paste the token.
+6. Push to `main`, or run the workflow by hand from the **Actions** tab ("Publish EAS Update" → **Run workflow**).
+
+### Opening it on your phone
+
+1. Sign in to **Expo Go** on your phone with the same Expo account.
+2. Open your project on [expo.dev](https://expo.dev), go to **Updates**, pick the latest update on the `main` branch, and scan its QR code with your phone (or find the project under your account in Expo Go).
+
+Your laptop can now be off. Each push to `main` publishes a new version, and the app picks it up the next time it opens.
+
+### Installing as a real iOS app (paid Apple account)
+
+If Expo Go can't open the update, build a standalone app. `eas.json` already has the build profiles.
+
+```bash
+npx eas-cli build --platform ios --profile production --auto-submit
+```
+
+This builds in the cloud (no Mac needed) and sends the app to TestFlight. Install the **TestFlight** app on your iPhone to get it. The app downloads new updates from the same GitHub Actions workflow automatically. For a free Android install, run `npx eas-cli build --platform android --profile preview` and open the APK link on your phone.
+
+### AI features away from home
+
+The AI features use Ollama on your computer, so they only work while that computer is on and reachable. Everything else (app view, pop-up shield, saved sites) works anywhere.
+
+---
+
 ## Optional: set up the local AI
 
 The app works without AI. To turn on page summaries, safety checks and "ask about this page", run Ollama on your computer and point the app at it.
@@ -127,7 +174,10 @@ The suite (5 files, 85 tests) runs in Node with mocks for the WebView and native
 webskin/
 ├── README.md
 ├── LICENSE
+├── .github/workflows/
+│   └── eas-update.yml               test + publish an EAS Update on push to main
 └── mobile/                          Expo / React Native app
+    ├── eas.json                     EAS build profiles and update channels
     ├── App.js                       app shell and screen switching
     ├── index.js                     entry point
     ├── app.json                     Expo config (name, icons, bundle ids)

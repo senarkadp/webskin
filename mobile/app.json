@@ -26,6 +26,18 @@
     "plugins": [
       "expo-asset",
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "4b36d5dc-8852-4b32-a93d-3d083cbebb38"
+      }
+    },
+    "owner": "strawhat98",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/4b36d5dc-8852-4b32-a93d-3d083cbebb38"
+    }
   }
 }

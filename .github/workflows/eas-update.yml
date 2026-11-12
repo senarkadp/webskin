@@ -59,3 +59,8 @@ jobs:
         env:
           MESSAGE: ${{ github.event.head_commit.message || 'Manual publish' }}
         run: eas update --branch main --environment production --message "$MESSAGE" --non-interactive
+
+      - name: Add link to run summary
+        run: |
+          echo "### Published to EAS Update (branch \`main\`)" >> "$GITHUB_STEP_SUMMARY"
+          echo "Open it in Expo Go: https://expo.dev/accounts/strawhat98/projects/webskin/updates" >> "$GITHUB_STEP_SUMMARY"
